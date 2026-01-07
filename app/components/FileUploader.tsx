@@ -4,9 +4,10 @@ import { formatSize } from '../lib/utils'
 
 interface FileUploaderProps {
     onFileSelect?: (file: File | null) => void;
+    file?: File | null;
 }
 
-const FileUploader = ({ onFileSelect }: FileUploaderProps) => {
+const FileUploader = ({ onFileSelect, file: controlledFile }: FileUploaderProps) => {
     const onDrop = useCallback((acceptedFiles: File[]) => {
         const file = acceptedFiles[0] || null;
 
@@ -22,7 +23,8 @@ const FileUploader = ({ onFileSelect }: FileUploaderProps) => {
         maxSize: maxFileSize,
     })
 
-    const file = acceptedFiles[0] || null;
+    // Use controlled file prop if provided, otherwise fall back to acceptedFiles
+    const file = controlledFile !== undefined ? controlledFile : (acceptedFiles[0] || null);
 
 
 
