@@ -6,9 +6,8 @@ const upload = () => {
     <main className="bg-[url('/images/bg-main.svg')] bg-cover">
     <Navbar />
    <section className="main-section">
-    
- 
- </section>
+    <div className=''></div>
+   </section>
   </main>
   )
 }
