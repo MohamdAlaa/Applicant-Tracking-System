@@ -13,16 +13,31 @@ async function loadPdfJs(): Promise<any> {
   if (loadPromise) return loadPromise;
 
   isLoading = true;
-  // @ts-expect-error - pdfjs-dist/build/pdf.mjs is not a module
-  loadPromise = import("pdfjs-dist/build/pdf.mjs").then((lib) => {
-    // Set the worker source to use local file
-    lib.GlobalWorkerOptions.workerSrc = "/pdf.worker.min.mjs";
-    pdfjsLib = lib;
-    isLoading = false;
-    return lib;
-  });
+  try {
+    // For pdfjs-dist v5.x, use the build/pdf path
+    // @ts-expect-error - pdfjs-dist/build/pdf.mjs module path
+    loadPromise = import("pdfjs-dist/build/pdf.mjs").then((lib) => {
+      // Set the worker source to use local file
+      if (lib && lib.GlobalWorkerOptions) {
+        lib.GlobalWorkerOptions.workerSrc = "/pdf.worker.min.mjs";
+      }
+      pdfjsLib = lib;
+      isLoading = false;
+      return lib;
+    }).catch((err) => {
+      isLoading = false;
+      loadPromise = null;
+      const errorMsg = err?.message || err?.toString() || "Unknown error";
+      console.error("PDF.js load error:", errorMsg);
+      throw new Error(`Failed to load PDF.js library: ${errorMsg}`);
+    });
 
-  return loadPromise;
+    return loadPromise;
+  } catch (err) {
+    isLoading = false;
+    loadPromise = null;
+    throw err;
+  }
 }
 
 export async function convertPdfToImage(
@@ -39,15 +54,21 @@ export async function convertPdfToImage(
     const canvas = document.createElement("canvas");
     const context = canvas.getContext("2d");
 
+    if (!context) {
+      return {
+        imageUrl: "",
+        file: null,
+        error: "Failed to get canvas context",
+      };
+    }
+
     canvas.width = viewport.width;
     canvas.height = viewport.height;
 
-    if (context) {
-      context.imageSmoothingEnabled = true;
-      context.imageSmoothingQuality = "high";
-    }
+    context.imageSmoothingEnabled = true;
+    context.imageSmoothingQuality = "high";
 
-    await page.render({ canvasContext: context!, viewport }).promise;
+    await page.render({ canvasContext: context, viewport }).promise;
 
     return new Promise((resolve) => {
       canvas.toBlob(
@@ -67,7 +88,7 @@ export async function convertPdfToImage(
             resolve({
               imageUrl: "",
               file: null,
-              error: "Failed to create image blob",
+              error: "Failed to create image blob from canvas",
             });
           }
         },
@@ -75,11 +96,13 @@ export async function convertPdfToImage(
         1.0
       ); // Set quality to maximum (1.0)
     });
-  } catch (err) {
+  } catch (err: any) {
+    const errorMessage = err?.message || err?.toString() || "Unknown error";
+    console.error("PDF conversion error:", errorMessage, err);
     return {
       imageUrl: "",
       file: null,
-      error: `Failed to convert PDF: ${err}`,
+      error: errorMessage,
     };
   }
 }
