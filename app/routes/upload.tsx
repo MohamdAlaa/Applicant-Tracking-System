@@ -1,8 +1,12 @@
 import React, { useState, type FormEvent } from 'react'
+import { useNavigate } from 'react-router';
 import FileUploader from '~/components/FileUploader';
 import Navbar from '~/components/Navbar'
+import { usePuterStore } from '~/lib/puter';
 
 const upload = () => {
+    const { auth, isLoading, fs, ai, kv } = usePuterStore();
+    const navigate = useNavigate();
     const [isProcessing, setisProcessing] = useState(false);
     const [statusText, setstatusText] = useState('');
     const [file, setfile] = useState<File | null>(null);
