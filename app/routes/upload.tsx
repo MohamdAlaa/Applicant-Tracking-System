@@ -9,6 +9,10 @@ const upload = () => {
 
     const handelFileSelect = (file:File | null) => {
         setfile(file)
+    };
+
+    const handelAnalyze = async ({file, companyName, jobTitle, jobDescription}: {file: File , companyName: string , jobTitle: string , jobDescription: string }) => {
+
     }
 
     const handelSubmit = (e:FormEvent<HTMLFormElement>) =>{
@@ -17,15 +21,13 @@ const upload = () => {
         if(!form){
             return;
         }
-        const formData = new FormData(form);
-        const companyName = formData.get('company-name');
-        const jobTitle = formData.get('job-title');
-        const jobDescription = formData.get('job-description');
+        const formData = new FormData(form) ;
+        const companyName = formData.get('company-name') as string;
+        const jobTitle = formData.get('job-title') as string;
+        const jobDescription = formData.get('job-description') as string;
 
-      console.log({
-        companyName,jobTitle,jobDescription,file
-      });
-      
+     if(!file) return;
+     handelAnalyze({file, companyName, jobTitle, jobDescription: jobDescription});
     }
 
 
