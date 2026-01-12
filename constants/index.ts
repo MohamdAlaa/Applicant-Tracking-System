@@ -245,6 +245,28 @@ export const resumes: Resume[] = [
     If provided, take the job description into consideration.
     The job title is: ${jobTitle}
     The job description is: ${jobDescription}
-    Provide the feedback using the following format: ${AIResponseFormat}
-    Return the analysis as a JSON object, without any other text and without the backticks.
-    Do not include any other text or comments.`;
+    
+    CRITICAL REQUIREMENTS:
+    1. You MUST provide a DIFFERENT score for EACH of the following categories (toneAndStyle, content, structure, skills).
+    2. Each category should be evaluated independently based on its specific criteria.
+    3. Scores should range from 0-100 and reflect the actual quality of that specific aspect.
+    4. DO NOT give the same score to multiple categories - each must be unique based on its evaluation.
+    5. For example: toneAndStyle might be 75, content might be 60, structure might be 85, skills might be 70.
+    
+    Evaluation criteria for each category:
+    - toneAndStyle: Professional tone, appropriate language, clarity of communication
+    - content: Relevance, completeness, accuracy of information, alignment with job requirements
+    - structure: Organization, formatting, readability, logical flow, section arrangement
+    - skills: Relevance of skills listed, proper presentation, alignment with job requirements
+    
+    Provide the feedback using EXACTLY the following format: ${AIResponseFormat}
+    
+    IMPORTANT: Return ONLY a valid JSON object with these EXACT property names (camelCase):
+    - overallScore (number, 0-100)
+    - ATS (object with: score number, tips array)
+    - toneAndStyle (object with: score number 0-100, tips array with tip and explanation)
+    - content (object with: score number 0-100, tips array with tip and explanation)
+    - structure (object with: score number 0-100, tips array with tip and explanation)
+    - skills (object with: score number 0-100, tips array with tip and explanation)
+    
+    Each category MUST have a different score. Return ONLY the JSON object, no markdown, no code blocks, no additional text.`;
