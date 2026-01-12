@@ -32,7 +32,6 @@ const FileUploader = ({ onFileSelect, file: controlledFile }: FileUploaderProps)
         <div className="w-full gradient-border">
             <div {...getRootProps()}>
                 <input {...getInputProps()} />
-
                 <div className="space-y-4 cursor-pointer">
                     {file ? (
                         <div className="uploader-selected-file" onClick={(e) => e.stopPropagation()}>
