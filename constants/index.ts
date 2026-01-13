@@ -246,6 +246,11 @@ export const resumes: Resume[] = [
     The job title is: ${jobTitle}
     The job description is: ${jobDescription}
     
+    TIP TYPE GUIDELINES:
+    - Use type: "good" for positive feedback - things the resume does well (e.g., "Excellent use of keywords", "Well-structured format")
+    - Use type: "improve" for suggestions - things that need improvement (e.g., "Add more keywords", "Fix formatting issues")
+    - Provide a mix of both "good" and "improve" tips to give balanced feedback
+    
     CRITICAL REQUIREMENTS:
     1. You MUST provide a DIFFERENT score for EACH of the following categories (toneAndStyle, content, structure, skills).
     2. Each category should be evaluated independently based on its specific criteria.

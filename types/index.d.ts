@@ -21,14 +21,15 @@ interface Job {
       tips: {
         type: "good" | "improve";
         tip: string;
+        explanation:string
       }[];
     };
     toneAndStyle: {
       score: number;
       tips: {
+        explanation: string;
         type: "good" | "improve";
         tip: string;
-        explanation: string;
       }[];
     };
     content: {

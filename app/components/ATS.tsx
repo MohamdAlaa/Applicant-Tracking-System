@@ -3,11 +3,13 @@ import React from 'react'
 interface Suggestion {
   type: "good" | "improve";
   tip: string;
+  explanation:string
 }
 
 interface ATSProps {
   score: number;
-  suggestions: (Suggestion | string)[];
+  suggestions: Suggestion[];
+  // suggestions: (Suggestion | string)[];
 }
 
 const ATS: React.FC<ATSProps> = ({ score, suggestions }) => {
@@ -48,25 +50,26 @@ const ATS: React.FC<ATSProps> = ({ score, suggestions }) => {
         <p className="text-gray-600 mb-4">
           This score represents how well your resume is likely to perform in Applicant Tracking Systems used by employers.
         </p>
-
-        {/* Suggestions list */}
+        {/* suggestions List */}
         <div className="space-y-3">
-          {suggestions.map((suggestion, index) => {
-            const tip = typeof suggestion === 'string' ? suggestion : suggestion.tip;
-            const type = typeof suggestion === 'string' ? 'improve' : suggestion.type;
-            return (
-              <div key={index} className="flex items-start gap-3">
-                <img
-                  src={type === "good" ? "/icons/check.svg" : "/icons/warning.svg"}
-                  alt={type === "good" ? "Check" : "Warning"}
-                  className="w-5 h-5 mt-1"
-                />
-                <p className={type === "good" ? "text-green-700" : "text-amber-700"}>
-                  {tip}
-                </p>
+          {suggestions.map((suggestion, index) => (
+            <div key={index} className="flex items-start gap-3">
+              <img
+                src={suggestion.type === "good" ? "/icons/check.svg" : "/icons/warning.svg"}
+                alt={suggestion.type === "good" ? "Check" : "Warning"}
+                className="w-5 h-5 mt-1"
+              />
+              <div>
+                <p className={suggestion.type === "good" ? "text-green-700" : "text-amber-700"}>
+                {typeof suggestion === 'string' ? suggestion : suggestion.tip}
+              </p>
+              <p className='text-black'>
+                {typeof suggestion === 'string' ? null : suggestion.explanation}.
+              </p>
               </div>
-            );
-          })}
+             
+            </div>
+          ))}
         </div>
       </div>
 
