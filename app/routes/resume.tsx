@@ -81,8 +81,12 @@ const resume = () => {
                     {feedback ? (
                         <div className="flex flex-col gap-8 animate-in fade-in duration-1000">
                           <Summary feedback={feedback} />
-                          {/* <ATS score={feedback.ATS.score || 0} suggestions={feedback.ATS.tips || []} />
-                          <Details feedback={feedback} /> */}
+                          <ATS score={feedback.ATS.score || 0} suggestions=
+                          {feedback.ATS.tips || []} />
+
+
+                          {/* <ATS score={feedback.ATS.score || 0} suggestions={(feedback.ATS.tips || []).map((tip: any) => typeof tip === 'string' ? { type: 'improve', tip } : tip)} /> */}
+                          {/* <Details feedback={feedback} /> */}
                         </div>
                     ) : (
                         <img src="/images/resume-scan-2.gif" className="w-full" />
