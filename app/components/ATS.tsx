@@ -9,7 +9,6 @@ interface Suggestion {
 interface ATSProps {
   score: number;
   suggestions: Suggestion[];
-  // suggestions: (Suggestion | string)[];
 }
 
 const ATS: React.FC<ATSProps> = ({ score, suggestions }) => {
