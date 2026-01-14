@@ -71,7 +71,7 @@ const CategoryContent = ({
                     alt="score"
                     className="size-5"
                 />
-                <p className="text-xl text-gray-500 ">{tip.tip}</p>
+                <p className="text-md text-gray-500 ">{tip.tip}</p>
               </div>
           ))}
         </div>
