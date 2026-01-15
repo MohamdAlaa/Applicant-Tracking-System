@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router";
+import { Link, useNavigate } from "react-router";
 import { usePuterStore } from "~/lib/puter";
 
 const WipeApp = () => {
@@ -40,16 +40,22 @@ const WipeApp = () => {
 
     return (
         <div  className="flex items-center justify-center mt-5 flex-col">
+          <nav className='resume-nav'>  
+          <Link to="/" className='back-button'>
+            <img src="/icons/back.svg" alt="back" className='w-2.5 h-2.5'/>
+            <span className='text-gray-800 text-sm font-semibold'>Back to Home</span>
+            </Link>
+        </nav>
             Authenticated as: {auth.user?.username}
-            {files.length > 0 ? (
+            {files.length === 0 ? (
             <div>No Files</div>
             ) : (
-              <>
-               <div>Existing files:</div>
+            <>
+            <div>Existing files:</div>
             <div className="flex flex-col gap-4">
                 {files.map((file) => (
                     <div key={file.id} className="flex flex-row gap-4">
-                        <p>{file.name}</p>
+                    <p>{file.name}</p>
                     </div>
                 ))}
             </div>
