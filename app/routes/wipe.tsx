@@ -31,7 +31,7 @@ const WipeApp = () => {
     };
 
     if (isLoading) {
-        return <div>Loading...</div>;
+        return <div className="flex items-center justify-center mt-5">Loading...</div>;
     }
 
     if (error) {
@@ -39,9 +39,13 @@ const WipeApp = () => {
     }
 
     return (
-        <div>
+        <div  className="flex items-center justify-center mt-5 flex-col">
             Authenticated as: {auth.user?.username}
-            <div>Existing files:</div>
+            {files.length > 0 ? (
+            <div>No Files</div>
+            ) : (
+              <>
+               <div>Existing files:</div>
             <div className="flex flex-col gap-4">
                 {files.map((file) => (
                     <div key={file.id} className="flex flex-row gap-4">
@@ -49,6 +53,9 @@ const WipeApp = () => {
                     </div>
                 ))}
             </div>
+              </>
+            )}
+            
             <div>
                 <button
                     className="bg-blue-500 text-white px-4 py-2 rounded-md cursor-pointer"
