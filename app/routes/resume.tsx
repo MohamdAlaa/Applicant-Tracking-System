@@ -44,7 +44,6 @@ const resume = () => {
           if(!imageBlob) return;
           const imageUrl = URL.createObjectURL(imageBlob);
           setImageUrl(imageUrl);
-          console.log( "Loaded resume data:", data);
           setFeedback(data.feedback);
           }
         

@@ -62,9 +62,9 @@ const ATS: React.FC<ATSProps> = ({ score, suggestions }) => {
                 <p className={suggestion.type === "good" ? "text-green-700" : "text-amber-700"}>
                 {typeof suggestion === 'string' ? suggestion : suggestion.tip}
               </p>
-              <p className='text-black'>
+              {/* <p className='text-black'>
                 {typeof suggestion === 'string' ? null : suggestion.explanation}
-              </p>
+              </p> */}
               </div>
              
             </div>
